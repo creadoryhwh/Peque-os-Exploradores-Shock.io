@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pequeños Exploradores Shock - Juegos bíblicos infantiles de Shock 99.5 FM">
+<meta name="theme-color" content="#050510">
+<title>Pequeños Exploradores Shock | Juegos Bíblicos</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --amarillo: #facc15;
+  --naranja: #f97316;
+  --celeste: #06b6d4;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  color: #fff;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #050510;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ================= FONDO BÍBLICO ESTÁTICO ================= */
+.fondo-siluetas {
+  position: fixed; inset: 0; z-index: -6; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255,120,0,.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 0%, rgba(70,50,120,.55) 0%, transparent 55%),
+    linear-gradient(180deg,#030308 0%,#0a0818 18%,#14102a 34%,#1e1230 50%,#2d1533 66%,#4a1e2d 82%,#6b2418 100%);
+}
+.fondo-siluetas .sol {
+  position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+  width: clamp(120px,22vw,260px); height: clamp(120px,22vw,260px); border-radius: 50%;
+  background: radial-gradient(circle,rgba(255,240,150,1) 0%,rgba(255,160,50,.7) 35%,rgba(255,100,0,.35) 60%,transparent 75%);
+  filter: blur(18px); opacity: .85;
+}
+.fondo-siluetas .estrellas-svg {
+  position: absolute; inset: 0; opacity: .7;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 30% 10%, #fff 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 55% 18%, #fff 50%, transparent 51%),
+    radial-gradient(1.8px 1.8px at 75% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 88% 22%, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 18% 35%, #fff 50%, transparent 51%),
+    radial-gradient(1.1px 1.1px at 42% 28%, #fff 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 66% 32%, #fff 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 92% 38%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 6% 48%, #fff 50%, transparent 51%);
+  animation: titilarSuave 4s ease-in-out infinite alternate;
+}
+@keyframes titilarSuave { from { opacity: .35; } to { opacity: .85; } }
+
+.fondo-siluetas svg.paisaje {
+  position: absolute; bottom: 0; left: 0; width: 100%; height: auto; display: block;
+  opacity: .55; filter: drop-shadow(0 0 30px rgba(255,140,0,.25));
+}
+
+/* ================= HEADER ================= */
+.header-hub { text-align: center; padding: clamp(10px,2vw,22px) 12px clamp(6px,1vw,12px); position: relative; z-index: 10; }
+.titulo-hub {
+  font-size: clamp(1rem,3.4vw,1.7rem); font-weight: bold;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.9),0 0 16px rgba(250,204,21,.9),0 0 30px rgba(249,115,22,.6);
+  letter-spacing: 1px; margin-bottom: .25rem;
+}
+.subtitulo-hub {
+  font-size: clamp(.7rem,2vw,.95rem); color: #fde68a; font-style: italic;
+  text-shadow: 1px 1px 4px rgba(0,0,0,.95); letter-spacing: .5px;
+}
+.versiculo-hub {
+  font-size: clamp(.6rem,1.6vw,.8rem); color: #fed7aa;
+  max-width: 640px; margin: .4rem auto 0; padding: .4rem .8rem;
+  background: rgba(0,0,0,.45); border-radius: 12px; border: 1px solid rgba(250,204,21,.5);
+  line-height: 1.35; text-shadow: 1px 1px 2px rgba(0,0,0,.95);
+}
+.versiculo-hub strong { color: #facc15; }
+
+/* ================= GRID ================= */
+main.juegos-grid {
+  flex: 1; display: grid; gap: clamp(8px,1.4vw,16px); grid-template-columns: 1fr;
+  padding: clamp(8px,1.5vw,18px) clamp(10px,2vw,22px);
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  position: relative; z-index: 5; align-content: center; justify-content: center;
+}
+@media (min-width: 520px)  { main.juegos-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px)  { main.juegos-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1200px) { main.juegos-grid { grid-template-columns: repeat(5, 1fr); } }
+
+/* ================= TARJETA ================= */
+.juego-card {
+  background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
+  border: 2px solid rgba(250,204,21,.65); border-radius: 18px;
+  padding: clamp(10px,1.6vw,16px) clamp(8px,1.4vw,14px);
+  text-align: center; cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
+  position: relative; overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,.5), 0 0 18px rgba(250,204,21,.25), inset 0 0 18px rgba(250,204,21,.08);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.juego-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  border-color: #facc15;
+  box-shadow: 0 16px 40px rgba(0,0,0,.65), 0 0 40px rgba(250,204,21,.85), inset 0 0 30px rgba(250,204,21,.18);
+}
+
+/* ================= ICONO 3D (SVG) ================= */
+.juego-icono-3d {
+  width: clamp(65px, 10vw, 90px);
+  height: clamp(65px, 10vw, 90px);
+  display: block;
+  margin: 0 auto .45rem;
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,.6));
+  transition: transform .25s ease;
+}
+.juego-card:hover .juego-icono-3d { transform: translateY(-4px) scale(1.08); }
+
+.juego-titulo {
+  font-size: clamp(.72rem,1.5vw,.95rem); font-weight: bold; color: #fef3c7;
+  margin-bottom: .25rem; text-shadow: 1px 1px 3px rgba(0,0,0,.95); line-height: 1.2;
+}
+.juego-descripcion {
+  font-size: clamp(.6rem,1.2vw,.78rem); color: #fed7aa; line-height: 1.3;
+  margin-bottom: .35rem; text-shadow: 1px 1px 2px rgba(0,0,0,.95);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.juego-versiculo {
+  display: inline-block; font-size: clamp(.55rem,1.1vw,.7rem); color: #facc15;
+  background: rgba(0,0,0,.45); padding: .15rem .5rem; border-radius: 50px;
+  border: 1px solid rgba(250,204,21,.55); font-weight: bold; margin-bottom: .5rem; white-space: nowrap;
+}
+.btn-jugar {
+  display: inline-block; background: linear-gradient(135deg,#facc15,#f97316); color: #1e293b;
+  border: 2px solid #fff; padding: clamp(.35rem,.9vw,.5rem) clamp(.9rem,1.8vw,1.2rem);
+  border-radius: 50px; font-weight: bold; font-size: clamp(.65rem,1.3vw,.85rem);
+  font-family: inherit; cursor: pointer; box-shadow: 0 3px 0 #b45309, 0 5px 12px rgba(0,0,0,.4);
+  transition: all .15s; margin-top: auto; white-space: nowrap;
+}
+.juego-card:hover .btn-jugar {
+  transform: translateY(-2px); box-shadow: 0 5px 0 #b45309, 0 8px 16px rgba(0,0,0,.5);
+  background: linear-gradient(135deg,#fde047,#fb923c);
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center; padding: clamp(6px,1.2vw,14px) 12px;
+  background: rgba(0,0,0,.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-top: 2px solid rgba(250,204,21,.6); position: relative; z-index: 5;
+  margin-top: auto; box-shadow: 0 -6px 24px rgba(250,204,21,.15); flex-shrink: 0;
+}
+footer p {
+  color: #fde68a; font-size: clamp(.6rem,1.3vw,.78rem); margin-bottom: .15rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.95); line-height: 1.3;
+}
+footer strong { color: #facc15; }
+footer .credito { font-size: clamp(.55rem,1.1vw,.7rem); opacity: .85; font-style: italic; color: #fed7aa; margin-top: .3rem; }
+
+/* ================= EFECTO CLICK ================= */
+.destello-click {
+  position: fixed; inset: 0;
+  background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,.95) 0%, rgba(220,235,255,.8) 15%, rgba(180,210,255,.4) 30%, transparent 60%);
+  pointer-events: none; z-index: 9998; animation: destelloClick .6s ease-out forwards;
+}
+@keyframes destelloClick { 0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; } }
+.chispa {
+  position: fixed; width: 8px; height: 8px; border-radius: 50%;
+  background: radial-gradient(circle,#fff 0%,#c8dcff 40%,#7aa2ff 70%,transparent 100%);
+  box-shadow: 0 0 12px #fff,0 0 24px #a8c8ff,0 0 40px #6080ff;
+  pointer-events: none; z-index: 9999; animation: chispaVuela .8s ease-out forwards;
+}
+@keyframes chispaVuela {
+  0% { opacity: 1; transform: translate(0,0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx),var(--ty)) scale(.1); }
+}
+
+@media (max-width: 520px) {
+  .juego-card { padding: 10px 8px; }
+  .btn-jugar { padding: .35rem .8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- FONDO BÍBLICO ESTÁTICO -->
+<div class="fondo-siluetas" aria-hidden="true">
+  <div class="estrellas-svg"></div>
+  <div class="sol"></div>
+  <svg class="paisaje" viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,400 L0,250 L120,180 L260,230 L400,150 L560,220 L720,120 L880,200 L1040,140 L1200,210 L1340,170 L1440,240 L1440,400 Z" fill="#0b0508"/>
+    <path d="M420,400 L560,240 L620,200 L700,140 L760,100 L820,140 L900,200 L960,240 L1100,400 Z" fill="#070305"/>
+    <rect x="746" y="55" width="8" height="60" fill="#070305"/>
+    <rect x="722" y="78" width="56" height="8" fill="#070305"/>
+    <path d="M180,400 L184,300 L188,400 Z" fill="#070305"/>
+    <path d="M150,300 Q184,270 218,300 Q200,290 184,296 Q168,290 150,300 Z" fill="#070305"/>
+    <path d="M240,400 L250,360 L360,360 L370,400 Z" fill="#070305"/>
+    <rect x="262" y="330" width="86" height="32" rx="4" fill="#070305"/>
+    <path d="M262,330 Q305,300 348,330 Z" fill="#070305"/>
+    <path d="M1050,400 L1070,360 L1210,360 L1230,400 Z" fill="#070305"/>
+    <path d="M1140,360 L1140,300 L1180,300 L1180,360 Z" fill="#070305"/>
+    <path d="M1140,300 L1200,330 L1140,330 Z" fill="#070305"/>
+    <ellipse cx="640" cy="385" rx="22" ry="12" fill="#070305"/>
+    <circle cx="660" cy="378" r="7" fill="#070305"/>
+    <circle cx="560" cy="368" r="6" fill="#070305"/>
+    <rect x="557" y="374" width="6" height="20" fill="#070305"/>
+    <path d="M563,378 Q578,368 578,384" stroke="#070305" stroke-width="3" fill="none"/>
+    <path d="M0,400 L0,340 Q180,300 360,340 Q540,380 720,340 Q900,300 1080,340 Q1260,380 1440,340 L1440,400 Z" fill="#050204"/>
+  </svg>
+</div>
+
+<header class="header-hub">
+  <h1 class="titulo-hub">⚡ PEQUEÑOS EXPLORADORES SHOCK ⚡</h1>
+  <p class="subtitulo-hub">🎮 Juegos Bíblicos Interactivos 🎮</p>
+  <p class="versiculo-hub">
+    "Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él." <strong>— Proverbios 22:6</strong>
+  </p>
+</header>
+
+<main class="juegos-grid" aria-label="Lista de juegos bíblicos">
+
+  <!-- 1. Pequeños Exploradores Shock -->
+  <a href="https://creadoryhwh.github.io/peque-osexploradoresshock.github.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar Pequeños Exploradores Shock">
+    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Explorador">
+      <defs>
+        <radialGradient id="skin" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#d97706"/></radialGradient>
+        <linearGradient id="shirt" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1e3a8a"/></linearGradient>
+        <linearGradient id="pants" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
+        <linearGradient id="hat" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#a16207"/></linearGradient>
+      </defs>
+      <ellipse cx="50" cy="88" rx="28" ry="6" fill="rgba(0,0,0,.45)"/>
+      <!-- Piernas con volumen -->
+      <path d="M40 65 Q38 75 32 85 L38 87 Q45 75 45 65 Z" fill="url(#pants)"/>
+      <path d="M60 65 Q62 75 68 85 L62 87 Q55 75 55 65 Z" fill="url(#pants)"/>
+      <!-- Torso con caída natural -->
+      <path d="M38 45 Q50 42 62 45 Q68 55 64 68 Q50 72 36 68 Q32 55 38 45 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="1.5"/>
+      <!-- Brazos -->
+      <path d="M38 48 Q25 55 22 62 L27 65 Q32 58 42 52 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="1.5"/>
+      <path d="M62 48 Q75 55 78 62 L73 65 Q68 58 58 52 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="1.5"/>
+      <!-- Cuello y cabeza -->
+      <rect x="46" y="38" width="8" height="8" fill="#d97706"/>
+      <ellipse cx="50" cy="30" rx="13" ry="14" fill="url(#skin)" stroke="#b45309" stroke-width="1.5"/>
+      <!-- Sombrero de explorador natural -->
+      <path d="M35 25 Q50 15 65 25 Q50 20 35 25" fill="url(#hat)" stroke="#854d0e" stroke-width="1"/>
+      <path d="M30 25 Q50 32 70 25 Q65 22 50 22 Q35 22 30 25 Z" fill="url(#hat)" stroke="#854d0e" stroke-width="1.5"/>
+      <!-- Ojos y sonrisa -->
+      <circle cx="45" cy="30" r="1.5" fill="#1e293b"/>
+      <circle cx="55" cy="30" r="1.5" fill="#1e293b"/>
+      <path d="M46 36 Q50 39 54 36" stroke="#1e293b" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <h3 class="juego-titulo">Pequeños Exploradores Shock</h3>
+    <p class="juego-descripcion">Corre con Pablo y supera 8 obstáculos hacia el Trofeo THEOS LOGOS.</p>
+    <span class="juego-versiculo">📖 1 Corintios 9:24</span>
+    <span class="btn-jugar">▶️ Jugar</span>
+  </a>
+
+  <!-- 2. Pescadores de Hombres -->
+  <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Pescadores.github.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar Pescadores de Hombres">
+    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Barca de pescadores">
+      <defs>
+        <linearGradient id="wood" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#78350f"/></linearGradient>
+        <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+        <linearGradient id="sail" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#cbd5e1"/></linearGradient>
+      </defs>
+      <ellipse cx="50" cy="88" rx="30" ry="6" fill="rgba(0,0,0,.45)"/>
+      <!-- Olas del agua suaves -->
+      <path d="M10 82 C 20 76, 30 88, 40 82 C 50 76, 60 88, 70 82 C 80 76, 90 88, 95 82 L 95 90 L 10 90 Z" fill="url(#water)"/>
+      <!-- Casco de la barca con curvas naturales -->
+      <path d="M15 65 C 25 70, 75 70, 85 65 C 80 80, 60 85, 50 85 C 40 85, 20 80, 15 65 Z" fill="url(#wood)" stroke="#451a03" stroke-width="1.5"/>
+      <!-- Mástil inclinado por el viento -->
+      <path d="M50 65 Q48 45 45 25" stroke="#451a03" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <!-- Vela hinchada por el viento -->
+      <path d="M45 25 C 65 30, 75 45, 65 60 C 55 62, 48 55, 48 45 Z" fill="url(#sail)" stroke="#94a3b8" stroke-width="1.5"/>
+      <!-- Detalle de red -->
+      <path d="M20 68 Q35 60 45 65" stroke="#f8fafc" stroke-width="1" fill="none" stroke-dasharray="2,2"/>
+    </svg>
+    <h3 class="juego-titulo">Pescadores de Hombres</h3>
+    <p class="juego-descripcion">Acompaña a Pedro y Andrés en su llamado junto al mar.</p>
+    <span class="juego-versiculo">📖 Mateo 4:18-20</span>
+    <span class="btn-jugar">▶️ Jugar</span>
+  </a>
+
+  <!-- 3. El León de Judá -->
+  <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-leon.github.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar El León de Judá">
+    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="León">
+      <defs>
+        <radialGradient id="mane" cx="50%" cy="50%" r="50%"><stop offset="40%" stop-color="#b45309"/><stop offset="100%" stop-color="#451a03"/></radialGradient>
+        <radialGradient id="face" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#d97706"/></radialGradient>
+      </defs>
+      <ellipse cx="50" cy="90" rx="26" ry="5" fill="rgba(0,0,0,.45)"/>
+      <!-- Melena orgánica con picos suaves -->
+      <path d="M50 5 C 60 10, 70 5, 80 15 C 90 25, 95 35, 90 50 C 95 65, 90 75, 80 85 C 70 95, 60 90, 50 95 C 40 90, 30 95, 20 85 C 10 75, 5 65, 10 50 C 5 35, 10 25, 20 15 C 30 5, 40 10, 50 5 Z" fill="url(#mane)" stroke="#451a03" stroke-width="1.5"/>
+      <!-- Orejas -->
+      <path d="M30 35 Q25 25 35 25 Q40 30 35 35 Z" fill="#d97706" stroke="#451a03" stroke-width="1"/>
+      <path d="M70 35 Q75 25 65 25 Q60 30 65 35 Z" fill="#d97706" stroke="#451a03" stroke-width="1"/>
+      <!-- Rostro redondeado -->
+      <path d="M50 20 C 70 20, 75 35, 75 50 C 75 70, 65 80, 50 80 C 35 80, 25 70, 25 50 C 25 35, 30 20, 50 20 Z" fill="url(#face)" stroke="#451a03" stroke-width="1.5"/>
+      <!-- Ojos con brillo -->
+      <circle cx="40" cy="45" r="3" fill="#1e293b"/>
+      <circle cx="60" cy="45" r="3" fill="#1e293b"/>
+      <circle cx="41" cy="44" r="1" fill="#fff"/>
+      <circle cx="61" cy="44" r="1" fill="#fff"/>
+      <!-- Hocico y boca natural -->
+      <path d="M45 55 Q50 50 55 55 L 50 62 Z" fill="#78350f"/>
+      <path d="M50 62 Q45 68 40 62 M50 62 Q55 68 60 62" stroke="#451a03" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M48 52 L48 56 M52 52 L52 56" stroke="#451a03" stroke-width="1"/>
+    </svg>
+    <h3 class="juego-titulo">El León de Judá</h3>
+    <p class="juego-descripcion">Aprende con valentía las historias del Rey de reyes.</p>
+    <span class="juego-versiculo">📖 Apocalipsis 5:5</span>
+    <span class="btn-jugar">▶️ Jugar</span>
+  </a>
+
+  <!-- 4. Ecos del Monte Sinaí -->
+  <a href="https://creadoryhwh.github.io/peque-osexploradoresshockmoises.github.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar Ecos del Monte Sinaí">
+    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Monte Sinaí con tablas de la ley">
+      <defs>
+        <linearGradient id="mountain" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#334155"/></linearGradient>
+        <linearGradient id="tablet" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+      </defs>
+      <ellipse cx="50" cy="90" rx="35" ry="6" fill="rgba(0,0,0,.45)"/>
+      <!-- Montaña con laderas irregulares -->
+      <path d="M5 88 L30 50 L40 55 L50 15 L60 55 L70 50 L95 88 Z" fill="url(#mountain)" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- Nieve texturizada en la cima -->
+      <path d="M50 15 L42 35 L48 30 L52 40 L58 35 L65 45 L60 55 L50 40 L40 55 L35 45 Z" fill="#f8fafc"/>
+      <!-- Tablas de la ley con volumen -->
+      <rect x="38" y="55" width="10" height="16" rx="3" fill="url(#tablet)" stroke="#451a03" stroke-width="1"/>
+      <rect x="52" y="55" width="10" height="16" rx="3" fill="url(#tablet)" stroke="#451a03" stroke-width="1"/>
+      <!-- Textos de las tablas -->
+      <line x1="41" y1="60" x2="45" y2="60" stroke="#451a03" stroke-width="1" stroke-linecap="round"/>
+      <line x1="41" y1="65" x2="45" y2="65" stroke="#451a03" stroke-width="1" stroke-linecap="round"/>
+      <line x1="55" y1="60" x2="59" y2="60" stroke="#451a03" stroke-width="1" stroke-linecap="round"/>
+      <line x1="55" y1="65" x2="59" y2="65" stroke="#451a03" stroke-width="1" stroke-linecap="round"/>
+    </svg>
+    <h3 class="juego-titulo">Ecos del Monte Sinaí</h3>
+    <p class="juego-descripcion">Sube al monte con Moisés y escucha la voz de Dios.</p>
+    <span class="juego-versiculo">📖 Éxodo 19:18</span>
+    <span class="btn-jugar">▶️ Jugar</span>
+  </a>
+
+  <!-- 5. Shock 99.5 FM -->
+  <a href="https://tunein.com/radio/Shock-Fm-995-s346433/?lang=es" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Escuchar Shock 99.5 FM en vivo">
+    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radio">
+      <defs>
+        <linearGradient id="radio-body" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0e7490"/></linearGradient>
+        <radialGradient id="speaker" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#64748b"/></radialGradient>
+      </defs>
+      <ellipse cx="50" cy="90" rx="26" ry="5" fill="rgba(0,0,0,.45)"/>
+      <!-- Cuerpo de la radio con bordes suaves -->
+      <rect x="15" y="40" width="65" height="40" rx="10" fill="url(#radio-body)" stroke="#083344" stroke-width="1.5"/>
+      <!-- Altavoz circular texturizado -->
+      <circle cx="36" cy="60" r="13" fill="url(#speaker)" stroke="#083344" stroke-width="1.5"/>
+      <circle cx="36" cy="60" r="5" fill="#334155"/>
+      <circle cx="36" cy="60" r="2" fill="#0f172a"/>
+      <!-- Panel de botones curvo -->
+      <rect x="56" y="48" width="16" height="5" rx="2.5" fill="#083344"/>
+      <rect x="56" y="57" width="16" height="5" rx="2.5" fill="#083344"/>
+      <circle cx="60" cy="70" r="2.5" fill="#facc15"/>
+      <circle cx="68" cy="70" r="2.5" fill="#f97316"/>
+      <!-- Antena inclinada -->
+      <path d="M25 40 Q20 25 15 12" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <circle cx="15" cy="12" r="3" fill="#facc15" stroke="#083344" stroke-width="1"/>
+      <!-- Ondas orgánicas de radio -->
+      <path d="M80 40 Q88 30 88 15" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M86 45 Q96 30 96 10" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+    <h3 class="juego-titulo">Shock 99.5 FM</h3>
+    <p class="juego-descripcion">Escucha en vivo música, historias bíblicas y alabanzas.</p>
+    <span class="juego-versiculo">📖 Marcos 16:15</span>
+    <span class="btn-jugar">🎵 Sintonizar</span>
+  </a>
+
+</main>
+
+<footer>
+  <p>📻 <strong>Shock 99.5 FM</strong> — Una Radio con Propósito</p>
+  <p class="credito">"Dejad a los niños venir a mí... porque de los tales es el reino de Dios." — Marcos 10:14</p>
+</footer>
+
+<script>
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function efectoClick(x, y) {
+  if (reduceMotion) return;
+  const destello = document.createElement('div');
+  destello.className = 'destello-click';
+  destello.style.setProperty('--x', x + 'px');
+  destello.style.setProperty('--y', y + 'px');
+  document.body.appendChild(destello);
+  setTimeout(() => destello.remove(), 700);
+
+  const total = 14;
+  for (let i = 0; i < total; i++) {
+    const chispa = document.createElement('div');
+    chispa.className = 'chispa';
+    chispa.style.left = x + 'px';
+    chispa.style.top = y + 'px';
+    const angulo = (Math.PI * 2 * i) / total + Math.random() * 0.5;
+    const distancia = 50 + Math.random() * 110;
+    chispa.style.setProperty('--tx', Math.cos(angulo) * distancia + 'px');
+    chispa.style.setProperty('--ty', Math.sin(angulo) * distancia + 'px');
+    chispa.style.animationDelay = (Math.random() * 0.08) + 's';
+    document.body.appendChild(chispa);
+    setTimeout(() => chispa.remove(), 1000);
+  }
+  if (navigator.vibrate) navigator.vibrate(40);
+}
+
+document.querySelectorAll('.juego-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (!href) return;
+    e.preventDefault();
+    efectoClick(e.clientX || e.pageX, e.clientY || e.pageY);
+    window.open(href, '_blank', 'noopener');
+  });
+});
+</script>
+
+</body>
+</html>
