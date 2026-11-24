@@ -14,6 +14,7 @@
   --amarillo: #facc15;
   --naranja: #f97316;
   --celeste: #06b6d4;
+  --fondo-oscuro: #050510;
 }
 
 html, body { height: 100%; }
@@ -26,167 +27,174 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #050510;
+  background: var(--fondo-oscuro);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ================= FONDO BÍBLICO ESTÁTICO ================= */
-.fondo-siluetas {
+/* ================= FONDO ESTILO WHATSAPP (PATRÓN DE SILUETAS BÍBLICAS) ================= */
+.fondo-patron {
   position: fixed; inset: 0; z-index: -6; pointer-events: none; overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(255,120,0,.35) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 0%, rgba(70,50,120,.55) 0%, transparent 55%),
-    linear-gradient(180deg,#030308 0%,#0a0818 18%,#14102a 34%,#1e1230 50%,#2d1533 66%,#4a1e2d 82%,#6b2418 100%);
+  background-color: #0b0716;
+  background-image: 
+    radial-gradient(circle at 50% 30%, rgba(250, 204, 21, 0.1) 0%, transparent 60%),
+    url('data:image/svg+xml;utf8,<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><g fill="%23ffffff" opacity="0.04"><path d="M40 20l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/><path d="M120 90c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm0 5c3 0 5 2 5 5s-2 5-5 5-5-2-5-5 2-5 5-5z"/><path d="M30 100l10 10m0-10l-10 10" stroke="%23fff" stroke-width="2"/><rect x="90" y="30" width="16" height="16" rx="2"/><path d="M70 140c0-10 20-10 20 0v10H70z"/><circle cx="50" cy="60" r="6"/><path d="M140 40l-5 15h10z"/></g></svg>');
+  background-size: 160px 160px;
+  background-position: center;
+  background-attachment: fixed;
+  filter: contrast(1.2) drop-shadow(0 0 40px rgba(250, 204, 21, 0.1));
 }
-.fondo-siluetas .sol {
-  position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
-  width: clamp(120px,22vw,260px); height: clamp(120px,22vw,260px); border-radius: 50%;
-  background: radial-gradient(circle,rgba(255,240,150,1) 0%,rgba(255,160,50,.7) 35%,rgba(255,100,0,.35) 60%,transparent 75%);
-  filter: blur(18px); opacity: .85;
-}
-.fondo-siluetas .estrellas-svg {
-  position: absolute; inset: 0; opacity: .7;
-  background-image:
-    radial-gradient(1.5px 1.5px at 10% 20%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 30% 10%, #fff 50%, transparent 51%),
-    radial-gradient(1.2px 1.2px at 55% 18%, #fff 50%, transparent 51%),
-    radial-gradient(1.8px 1.8px at 75% 12%, #fff 50%, transparent 51%),
-    radial-gradient(1.3px 1.3px at 88% 22%, #fff 50%, transparent 51%),
-    radial-gradient(1.4px 1.4px at 18% 35%, #fff 50%, transparent 51%),
-    radial-gradient(1.1px 1.1px at 42% 28%, #fff 50%, transparent 51%),
-    radial-gradient(1.6px 1.6px at 66% 32%, #fff 50%, transparent 51%),
-    radial-gradient(1.2px 1.2px at 92% 38%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 6% 48%, #fff 50%, transparent 51%);
-  animation: titilarSuave 4s ease-in-out infinite alternate;
-}
-@keyframes titilarSuave { from { opacity: .35; } to { opacity: .85; } }
-
-.fondo-siluetas svg.paisaje {
-  position: absolute; bottom: 0; left: 0; width: 100%; height: auto; display: block;
-  opacity: .55; filter: drop-shadow(0 0 30px rgba(255,140,0,.25));
+.fondo-patron::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(5,5,16,0.3) 0%, rgba(5,5,16,0.9) 100%);
 }
 
-/* ================= HEADER ================= */
-.header-hub { text-align: center; padding: clamp(10px,2vw,22px) 12px clamp(6px,1vw,12px); position: relative; z-index: 10; }
+/* ================= HEADER CON LOGO ================= */
+.header-hub { 
+  text-align: center; padding: clamp(20px,4vw,40px) 12px 10px; 
+  position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; 
+}
+/* LOGO SHOCK */
+.logo-shock-img {
+  width: clamp(220px, 40vw, 340px);
+  height: auto;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 10px 25px rgba(250, 204, 21, 0.5)) drop-shadow(0 0 10px rgba(249, 115, 22, 0.3));
+  transition: transform 0.3s ease;
+  animation: flotarLogo 4s ease-in-out infinite;
+}
+.logo-shock-img:hover { transform: scale(1.05) rotate(-2deg); animation-play-state: paused; }
+
+@keyframes flotarLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
 .titulo-hub {
-  font-size: clamp(1rem,3.4vw,1.7rem); font-weight: bold;
-  text-shadow: 2px 2px 0 rgba(0,0,0,.9),0 0 16px rgba(250,204,21,.9),0 0 30px rgba(249,115,22,.6);
-  letter-spacing: 1px; margin-bottom: .25rem;
+  font-size: clamp(1.4rem,4vw,2.4rem); font-weight: 900; color: #fff;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.9), 0 0 20px rgba(250,204,21,.9), 0 0 40px rgba(249,115,22,.7);
+  letter-spacing: 1px; margin-bottom: .5rem;
 }
 .subtitulo-hub {
-  font-size: clamp(.7rem,2vw,.95rem); color: #fde68a; font-style: italic;
+  font-size: clamp(.85rem,2.2vw,1.2rem); color: #fde68a; font-style: italic;
   text-shadow: 1px 1px 4px rgba(0,0,0,.95); letter-spacing: .5px;
+  background: rgba(0,0,0,0.6); padding: 6px 20px; border-radius: 20px; border: 1px solid rgba(250,204,21,0.4);
 }
-.versiculo-hub {
-  font-size: clamp(.6rem,1.6vw,.8rem); color: #fed7aa;
-  max-width: 640px; margin: .4rem auto 0; padding: .4rem .8rem;
-  background: rgba(0,0,0,.45); border-radius: 12px; border: 1px solid rgba(250,204,21,.5);
-  line-height: 1.35; text-shadow: 1px 1px 2px rgba(0,0,0,.95);
-}
-.versiculo-hub strong { color: #facc15; }
 
 /* ================= GRID ================= */
 main.juegos-grid {
-  flex: 1; display: grid; gap: clamp(8px,1.4vw,16px); grid-template-columns: 1fr;
-  padding: clamp(8px,1.5vw,18px) clamp(10px,2vw,22px);
-  max-width: 1200px; margin: 0 auto; width: 100%;
+  flex: 1; display: grid; gap: clamp(12px,1.8vw,22px); grid-template-columns: 1fr;
+  padding: clamp(10px,2vw,20px) clamp(10px,3vw,24px);
+  max-width: 1250px; margin: 0 auto; width: 100%;
   position: relative; z-index: 5; align-content: center; justify-content: center;
 }
 @media (min-width: 520px)  { main.juegos-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 900px)  { main.juegos-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1200px) { main.juegos-grid { grid-template-columns: repeat(5, 1fr); } }
 
-/* ================= TARJETA ================= */
+/* ================= TARJETA PROFESIONAL ================= */
 .juego-card {
-  background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
-  border: 2px solid rgba(250,204,21,.65); border-radius: 18px;
-  padding: clamp(10px,1.6vw,16px) clamp(8px,1.4vw,14px);
+  background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.02));
+  border: 2px solid rgba(250,204,21,.5); border-radius: 20px;
+  padding: clamp(15px,2vw,22px) clamp(10px,1.5vw,16px);
   text-align: center; cursor: pointer;
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
+  transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative; overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,.5), 0 0 18px rgba(250,204,21,.25), inset 0 0 18px rgba(250,204,21,.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,.6), inset 0 0 20px rgba(250,204,21,.05);
   text-decoration: none; color: inherit;
   display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
+.juego-card::before {
+  content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: skewX(-20deg); transition: 0.5s;
+}
+.juego-card:hover::before { left: 150%; }
 .juego-card:hover {
-  transform: translateY(-6px) scale(1.03);
+  transform: translateY(-8px) scale(1.02);
   border-color: #facc15;
-  box-shadow: 0 16px 40px rgba(0,0,0,.65), 0 0 40px rgba(250,204,21,.85), inset 0 0 30px rgba(250,204,21,.18);
+  box-shadow: 0 20px 50px rgba(0,0,0,.8), 0 0 40px rgba(250,204,21,.6), inset 0 0 30px rgba(250,204,21,.1);
 }
 
-/* ================= ICONO 3D (SVG) ================= */
+/* ================= ICONOS 3D IMPRESIONANTES ================= */
 .juego-icono-3d {
-  width: clamp(65px, 10vw, 90px);
-  height: clamp(65px, 10vw, 90px);
+  width: clamp(75px, 11vw, 100px);
+  height: clamp(75px, 11vw, 100px);
   display: block;
-  margin: 0 auto .45rem;
-  filter: drop-shadow(0 8px 10px rgba(0,0,0,.6));
-  transition: transform .25s ease;
+  margin: 0 auto .6rem;
+  filter: drop-shadow(0 10px 12px rgba(0,0,0,.7)) drop-shadow(0 0 20px rgba(250,204,21,.2));
+  transition: transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.juego-card:hover .juego-icono-3d { transform: translateY(-4px) scale(1.08); }
+.juego-card:hover .juego-icono-3d { 
+  transform: translateY(-5px) scale(1.15) rotate(2deg); 
+  filter: drop-shadow(0 15px 15px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(250,204,21,.5));
+}
 
 .juego-titulo {
-  font-size: clamp(.72rem,1.5vw,.95rem); font-weight: bold; color: #fef3c7;
-  margin-bottom: .25rem; text-shadow: 1px 1px 3px rgba(0,0,0,.95); line-height: 1.2;
+  font-size: clamp(.8rem,1.6vw,1.05rem); font-weight: 900; color: #fef3c7;
+  margin-bottom: .3rem; text-shadow: 2px 2px 4px rgba(0,0,0,.9); line-height: 1.2;
 }
 .juego-descripcion {
-  font-size: clamp(.6rem,1.2vw,.78rem); color: #fed7aa; line-height: 1.3;
-  margin-bottom: .35rem; text-shadow: 1px 1px 2px rgba(0,0,0,.95);
+  font-size: clamp(.65rem,1.2vw,.8rem); color: #cbd5e1; line-height: 1.35;
+  margin-bottom: .6rem; text-shadow: 1px 1px 2px rgba(0,0,0,.9);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .juego-versiculo {
-  display: inline-block; font-size: clamp(.55rem,1.1vw,.7rem); color: #facc15;
-  background: rgba(0,0,0,.45); padding: .15rem .5rem; border-radius: 50px;
-  border: 1px solid rgba(250,204,21,.55); font-weight: bold; margin-bottom: .5rem; white-space: nowrap;
+  display: inline-block; font-size: clamp(.6rem,1.1vw,.75rem); color: #facc15;
+  background: rgba(0,0,0,.6); padding: .2rem .6rem; border-radius: 50px;
+  border: 1px solid rgba(250,204,21,.4); font-weight: bold; margin-bottom: .8rem; white-space: nowrap;
 }
 .btn-jugar {
-  display: inline-block; background: linear-gradient(135deg,#facc15,#f97316); color: #1e293b;
-  border: 2px solid #fff; padding: clamp(.35rem,.9vw,.5rem) clamp(.9rem,1.8vw,1.2rem);
-  border-radius: 50px; font-weight: bold; font-size: clamp(.65rem,1.3vw,.85rem);
-  font-family: inherit; cursor: pointer; box-shadow: 0 3px 0 #b45309, 0 5px 12px rgba(0,0,0,.4);
-  transition: all .15s; margin-top: auto; white-space: nowrap;
+  display: inline-block; background: linear-gradient(180deg,#facc15,#f97316); color: #1e293b;
+  border: 2px solid #fef3c7; padding: clamp(.4rem,1vw,.6rem) clamp(1rem,2vw,1.5rem);
+  border-radius: 50px; font-weight: 900; font-size: clamp(.7rem,1.4vw,.9rem);
+  font-family: inherit; cursor: pointer; 
+  box-shadow: 0 4px 0 #b45309, 0 6px 15px rgba(0,0,0,.5);
+  transition: all .1s; margin-top: auto; white-space: nowrap;
 }
 .juego-card:hover .btn-jugar {
-  transform: translateY(-2px); box-shadow: 0 5px 0 #b45309, 0 8px 16px rgba(0,0,0,.5);
-  background: linear-gradient(135deg,#fde047,#fb923c);
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 0 #b45309, 0 10px 20px rgba(0,0,0,.6);
+  background: linear-gradient(180deg,#fde047,#fb923c);
+}
+.juego-card:active .btn-jugar {
+  transform: translateY(2px); box-shadow: 0 2px 0 #b45309, 0 4px 10px rgba(0,0,0,.5);
 }
 
 /* ================= FOOTER ================= */
 footer {
-  text-align: center; padding: clamp(6px,1.2vw,14px) 12px;
-  background: rgba(0,0,0,.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border-top: 2px solid rgba(250,204,21,.6); position: relative; z-index: 5;
-  margin-top: auto; box-shadow: 0 -6px 24px rgba(250,204,21,.15); flex-shrink: 0;
+  text-align: center; padding: clamp(10px,2vw,20px) 12px;
+  background: rgba(0,0,0,.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-top: 2px solid rgba(250,204,21,.4); position: relative; z-index: 5;
+  margin-top: auto; box-shadow: 0 -10px 30px rgba(0,0,0,.5); flex-shrink: 0;
 }
 footer p {
-  color: #fde68a; font-size: clamp(.6rem,1.3vw,.78rem); margin-bottom: .15rem;
-  text-shadow: 1px 1px 2px rgba(0,0,0,.95); line-height: 1.3;
+  color: #fde68a; font-size: clamp(.7rem,1.4vw,.85rem); margin-bottom: .2rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,.95); line-height: 1.4;
 }
 footer strong { color: #facc15; }
-footer .credito { font-size: clamp(.55rem,1.1vw,.7rem); opacity: .85; font-style: italic; color: #fed7aa; margin-top: .3rem; }
+footer .credito { font-size: clamp(.6rem,1.1vw,.75rem); opacity: .8; font-style: italic; color: #94a3b8; margin-top: .5rem; }
 
-/* ================= EFECTO CLICK ================= */
+/* ================= EFECTO CLICK (CHISPAS Y DESTELLO) ================= */
 .destello-click {
   position: fixed; inset: 0;
-  background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,.95) 0%, rgba(220,235,255,.8) 15%, rgba(180,210,255,.4) 30%, transparent 60%);
-  pointer-events: none; z-index: 9998; animation: destelloClick .6s ease-out forwards;
+  background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,1) 0%, rgba(250,204,21,.6) 20%, transparent 60%);
+  pointer-events: none; z-index: 9998; animation: destelloClick .5s ease-out forwards;
 }
-@keyframes destelloClick { 0% { opacity: 0; } 10% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes destelloClick { 0% { opacity: 0; transform: scale(0.8); } 20% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.2); } }
 .chispa {
   position: fixed; width: 8px; height: 8px; border-radius: 50%;
-  background: radial-gradient(circle,#fff 0%,#c8dcff 40%,#7aa2ff 70%,transparent 100%);
-  box-shadow: 0 0 12px #fff,0 0 24px #a8c8ff,0 0 40px #6080ff;
-  pointer-events: none; z-index: 9999; animation: chispaVuela .8s ease-out forwards;
+  background: radial-gradient(circle,#fff 0%,#facc15 50%,#f97316 100%);
+  box-shadow: 0 0 15px #facc15, 0 0 30px #f97316;
+  pointer-events: none; z-index: 9999; animation: chispaVuela .7s ease-out forwards;
 }
 @keyframes chispaVuela {
   0% { opacity: 1; transform: translate(0,0) scale(1); }
-  100% { opacity: 0; transform: translate(var(--tx),var(--ty)) scale(.1); }
+  100% { opacity: 0; transform: translate(var(--tx),var(--ty)) scale(.2); }
 }
 
 @media (max-width: 520px) {
-  .juego-card { padding: 10px 8px; }
-  .btn-jugar { padding: .35rem .8rem; }
+  .juego-card { padding: 15px 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -195,125 +203,106 @@ footer .credito { font-size: clamp(.55rem,1.1vw,.7rem); opacity: .85; font-style
 </head>
 <body>
 
-<!-- FONDO BÍBLICO ESTÁTICO -->
-<div class="fondo-siluetas" aria-hidden="true">
-  <div class="estrellas-svg"></div>
-  <div class="sol"></div>
-  <svg class="paisaje" viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,400 L0,250 L120,180 L260,230 L400,150 L560,220 L720,120 L880,200 L1040,140 L1200,210 L1340,170 L1440,240 L1440,400 Z" fill="#0b0508"/>
-    <path d="M420,400 L560,240 L620,200 L700,140 L760,100 L820,140 L900,200 L960,240 L1100,400 Z" fill="#070305"/>
-    <rect x="746" y="55" width="8" height="60" fill="#070305"/>
-    <rect x="722" y="78" width="56" height="8" fill="#070305"/>
-    <path d="M180,400 L184,300 L188,400 Z" fill="#070305"/>
-    <path d="M150,300 Q184,270 218,300 Q200,290 184,296 Q168,290 150,300 Z" fill="#070305"/>
-    <path d="M240,400 L250,360 L360,360 L370,400 Z" fill="#070305"/>
-    <rect x="262" y="330" width="86" height="32" rx="4" fill="#070305"/>
-    <path d="M262,330 Q305,300 348,330 Z" fill="#070305"/>
-    <path d="M1050,400 L1070,360 L1210,360 L1230,400 Z" fill="#070305"/>
-    <path d="M1140,360 L1140,300 L1180,300 L1180,360 Z" fill="#070305"/>
-    <path d="M1140,300 L1200,330 L1140,330 Z" fill="#070305"/>
-    <ellipse cx="640" cy="385" rx="22" ry="12" fill="#070305"/>
-    <circle cx="660" cy="378" r="7" fill="#070305"/>
-    <circle cx="560" cy="368" r="6" fill="#070305"/>
-    <rect x="557" y="374" width="6" height="20" fill="#070305"/>
-    <path d="M563,378 Q578,368 578,384" stroke="#070305" stroke-width="3" fill="none"/>
-    <path d="M0,400 L0,340 Q180,300 360,340 Q540,380 720,340 Q900,300 1080,340 Q1260,380 1440,340 L1440,400 Z" fill="#050204"/>
-  </svg>
-</div>
+<!-- FONDO ESTILO WHATSAPP (SILUETAS BÍBLICAS) -->
+<div class="fondo-patron" aria-hidden="true"></div>
 
 <header class="header-hub">
-  <h1 class="titulo-hub">⚡ PEQUEÑOS EXPLORADORES SHOCK ⚡</h1>
-  <p class="subtitulo-hub">🎮 Juegos Bíblicos Interactivos 🎮</p>
-  <p class="versiculo-hub">
-    "Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él." <strong>— Proverbios 22:6</strong>
-  </p>
+  
+  <!-- ==================================================== -->
+  <!-- COLOCA TU LOGO AQUÍ -->
+  <!-- El archivo se llama "logo-shock.png" y debe estar en la misma carpeta -->
+  <!-- ==================================================== -->
+  <img src="logo-shock.png" alt="Shock 99.5 FM" class="logo-shock-img" onerror="this.style.display='none'">
+
+  <h1 class="titulo-hub">⚡ PEQUEÑOS EXPLORADORES ⚡</h1>
+  <p class="subtitulo-hub">🎮 Elige tu Aventura Bíblica 🎮</p>
 </header>
 
 <main class="juegos-grid" aria-label="Lista de juegos bíblicos">
 
-  <!-- 1. Pequeños Exploradores Historias Shock -->
+  <!-- 1. Historias Shock (Explorador 3D) -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-historias-Shock.-io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar Pequeños Exploradores Historias Shock">
-    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Explorador">
+    <svg class="juego-icono-3d" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Explorador">
       <defs>
-        <radialGradient id="skin" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#d97706"/></radialGradient>
+        <radialGradient id="skin" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fef08a"/><stop offset="70%" stop-color="#d97706"/><stop offset="100%" stop-color="#92400e"/></radialGradient>
         <linearGradient id="shirt" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1e3a8a"/></linearGradient>
         <linearGradient id="pants" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
         <linearGradient id="hat" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#a16207"/></linearGradient>
+        <linearGradient id="backpack" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#991b1b"/></linearGradient>
       </defs>
-      <ellipse cx="50" cy="88" rx="28" ry="6" fill="rgba(0,0,0,.45)"/>
-      <path d="M40 65 Q38 75 32 85 L38 87 Q45 75 45 65 Z" fill="url(#pants)"/>
-      <path d="M60 65 Q62 75 68 85 L62 87 Q55 75 55 65 Z" fill="url(#pants)"/>
-      <path d="M38 45 Q50 42 62 45 Q68 55 64 68 Q50 72 36 68 Q32 55 38 45 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="1.5"/>
-      <path d="M38 48 Q25 55 22 62 L27 65 Q32 58 42 52 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="1.5"/>
-      <path d="M62 48 Q75 55 78 62 L73 65 Q68 58 58 52 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="1.5"/>
-      <rect x="46" y="38" width="8" height="8" fill="#d97706"/>
-      <ellipse cx="50" cy="30" rx="13" ry="14" fill="url(#skin)" stroke="#b45309" stroke-width="1.5"/>
-      <path d="M35 25 Q50 15 65 25 Q50 20 35 25" fill="url(#hat)" stroke="#854d0e" stroke-width="1"/>
-      <path d="M30 25 Q50 32 70 25 Q65 22 50 22 Q35 22 30 25 Z" fill="url(#hat)" stroke="#854d0e" stroke-width="1.5"/>
-      <circle cx="45" cy="30" r="1.5" fill="#1e293b"/>
-      <circle cx="55" cy="30" r="1.5" fill="#1e293b"/>
-      <path d="M46 36 Q50 39 54 36" stroke="#1e293b" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="60" cy="110" rx="35" ry="8" fill="rgba(0,0,0,.5)"/>
+      <rect x="70" y="50" width="22" height="30" rx="6" fill="url(#backpack)" stroke="#450a0a" stroke-width="2"/>
+      <rect x="72" y="55" width="18" height="6" rx="3" fill="#f87171"/>
+      <path d="M50 85 Q45 100 40 110 L50 112 Q55 100 55 85 Z" fill="url(#pants)"/>
+      <path d="M65 85 Q70 100 75 110 L65 112 Q60 100 60 85 Z" fill="url(#pants)"/>
+      <path d="M45 55 Q60 50 75 55 Q82 70 75 85 Q60 90 45 85 Q38 70 45 55 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="2"/>
+      <path d="M45 60 Q30 70 25 80 L32 85 Q40 75 50 65 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="2"/>
+      <path d="M75 60 Q90 65 95 75 L88 80 Q80 70 70 65 Z" fill="url(#shirt)" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="55" y="45" width="10" height="10" fill="#d97706"/>
+      <ellipse cx="60" cy="35" rx="18" ry="20" fill="url(#skin)" stroke="#92400e" stroke-width="2"/>
+      <path d="M38 30 Q60 15 82 30 Q60 25 38 30" fill="url(#hat)" stroke="#713f12" stroke-width="2"/>
+      <path d="M30 30 Q60 40 90 30 Q85 26 60 26 Q35 26 30 30 Z" fill="url(#hat)" stroke="#713f12" stroke-width="2"/>
+      <circle cx="52" cy="35" r="2.5" fill="#1e293b"/>
+      <circle cx="68" cy="35" r="2.5" fill="#1e293b"/>
+      <path d="M54 43 Q60 48 66 43" stroke="#1e293b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
     </svg>
-    <h3 class="juego-titulo">Pequeños Exploradores</h3>
-    <p class="juego-descripcion">Corre con Pablo y supera 8 obstáculos hacia el Trofeo THEOS LOGOS.</p>
+    <h3 class="juego-titulo">Historias Shock</h3>
+    <p class="juego-descripcion">Corre con Pablo y supera los obstáculos hacia el Trofeo THEOS LOGOS.</p>
     <span class="juego-versiculo">📖 1 Corintios 9:24</span>
     <span class="btn-jugar">▶️ Jugar</span>
   </a>
 
-  <!-- 2. La Oveja Perdida -->
+  <!-- 2. La Oveja Perdida (Oveja 3D) -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Oveja-Perdida.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar El Buen Pastor y la Oveja Perdida">
-    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oveja">
+    <svg class="juego-icono-3d" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oveja">
       <defs>
-        <radialGradient id="wool" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#cbd5e1"/></radialGradient>
-        <linearGradient id="face" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+        <radialGradient id="wool" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ffffff"/><stop offset="80%" stop-color="#cbd5e1"/><stop offset="100%" stop-color="#94a3b8"/></radialGradient>
+        <linearGradient id="face" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
       </defs>
-      <ellipse cx="50" cy="88" rx="30" ry="6" fill="rgba(0,0,0,.45)"/>
-      <!-- Patas -->
-      <rect x="35" y="72" width="6" height="14" rx="3" fill="#1e293b"/>
-      <rect x="59" y="72" width="6" height="14" rx="3" fill="#1e293b"/>
-      <!-- Cuerpo de lana (burbujas) -->
-      <path d="M25 65 C 20 50, 30 40, 40 45 C 45 35, 60 35, 65 45 C 75 40, 85 50, 80 65 C 75 75, 25 75, 25 65 Z" fill="url(#wool)" stroke="#94a3b8" stroke-width="1.5"/>
-      <!-- Cabeza -->
-      <ellipse cx="28" cy="55" rx="12" ry="14" fill="url(#face)" stroke="#0f172a" stroke-width="1.5"/>
-      <!-- Orejas -->
-      <ellipse cx="20" cy="52" rx="6" ry="3" fill="#1e293b" transform="rotate(-30 20 52)"/>
-      <ellipse cx="38" cy="48" rx="6" ry="3" fill="#1e293b" transform="rotate(30 38 48)"/>
-      <!-- Ojos -->
-      <circle cx="24" cy="53" r="2" fill="#fff"/>
-      <circle cx="32" cy="53" r="2" fill="#fff"/>
-      <!-- Mejilla sonrojada -->
-      <circle cx="22" cy="60" r="3" fill="#f43f5e" opacity="0.6"/>
+      <ellipse cx="60" cy="110" rx="35" ry="8" fill="rgba(0,0,0,.5)"/>
+      <rect x="40" y="85" width="8" height="20" rx="4" fill="#1e293b"/>
+      <rect x="70" y="85" width="8" height="20" rx="4" fill="#1e293b"/>
+      <circle cx="60" cy="65" r="30" fill="url(#wool)" stroke="#64748b" stroke-width="2"/>
+      <circle cx="40" cy="55" r="20" fill="url(#wool)" stroke="#64748b" stroke-width="2"/>
+      <circle cx="80" cy="55" r="20" fill="url(#wool)" stroke="#64748b" stroke-width="2"/>
+      <circle cx="45" cy="80" r="18" fill="url(#wool)" stroke="#64748b" stroke-width="2"/>
+      <circle cx="75" cy="80" r="18" fill="url(#wool)" stroke="#64748b" stroke-width="2"/>
+      <circle cx="60" cy="40" r="22" fill="url(#wool)" stroke="#64748b" stroke-width="2"/>
+      <ellipse cx="30" cy="70" rx="16" ry="20" fill="url(#face)" stroke="#000" stroke-width="2"/>
+      <ellipse cx="15" cy="65" rx="10" ry="5" fill="#1e293b" transform="rotate(-30 15 65)"/>
+      <ellipse cx="45" cy="55" rx="10" ry="5" fill="#1e293b" transform="rotate(30 45 55)"/>
+      <circle cx="22" cy="68" r="4" fill="#fff"/>
+      <circle cx="22" cy="68" r="2" fill="#000"/>
+      <circle cx="35" cy="68" r="4" fill="#fff"/>
+      <circle cx="35" cy="68" r="2" fill="#000"/>
+      <circle cx="18" cy="78" r="5" fill="#f43f5e" opacity="0.5"/>
     </svg>
-    <h3 class="juego-titulo">El Buen Pastor</h3>
-    <p class="juego-descripcion">Ayuda al Buen Pastor a encontrar a su ovejita perdida.</p>
+    <h3 class="juego-titulo">La Oveja Perdida</h3>
+    <p class="juego-descripcion">Ayuda al Buen Pastor a encontrar a su pequeña ovejita.</p>
     <span class="juego-versiculo">📖 Lucas 15:4</span>
     <span class="btn-jugar">▶️ Jugar</span>
   </a>
 
-  <!-- 3. El León de Judá -->
+  <!-- 3. El León de Judá (León 3D) -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-leon.github.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar El León de Judá">
-    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="León">
+    <svg class="juego-icono-3d" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="León">
       <defs>
-        <radialGradient id="mane" cx="50%" cy="50%" r="50%"><stop offset="40%" stop-color="#b45309"/><stop offset="100%" stop-color="#451a03"/></radialGradient>
-        <radialGradient id="face" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#d97706"/></radialGradient>
+        <radialGradient id="mane" cx="40%" cy="40%" r="60%"><stop offset="0%" stop-color="#f59e0b"/><stop offset="60%" stop-color="#78350f"/><stop offset="100%" stop-color="#451a03"/></radialGradient>
+        <radialGradient id="face" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fef08a"/><stop offset="60%" stop-color="#ca8a04"/><stop offset="100%" stop-color="#92400e"/></radialGradient>
       </defs>
-      <ellipse cx="50" cy="90" rx="26" ry="5" fill="rgba(0,0,0,.45)"/>
-      <!-- Melena orgánica con picos suaves -->
-      <path d="M50 5 C 60 10, 70 5, 80 15 C 90 25, 95 35, 90 50 C 95 65, 90 75, 80 85 C 70 95, 60 90, 50 95 C 40 90, 30 95, 20 85 C 10 75, 5 65, 10 50 C 5 35, 10 25, 20 15 C 30 5, 40 10, 50 5 Z" fill="url(#mane)" stroke="#451a03" stroke-width="1.5"/>
-      <!-- Orejas -->
-      <path d="M30 35 Q25 25 35 25 Q40 30 35 35 Z" fill="#d97706" stroke="#451a03" stroke-width="1"/>
-      <path d="M70 35 Q75 25 65 25 Q60 30 65 35 Z" fill="#d97706" stroke="#451a03" stroke-width="1"/>
-      <!-- Rostro redondeado -->
-      <path d="M50 20 C 70 20, 75 35, 75 50 C 75 70, 65 80, 50 80 C 35 80, 25 70, 25 50 C 25 35, 30 20, 50 20 Z" fill="url(#face)" stroke="#451a03" stroke-width="1.5"/>
-      <!-- Ojos con brillo -->
-      <circle cx="40" cy="45" r="3" fill="#1e293b"/>
-      <circle cx="60" cy="45" r="3" fill="#1e293b"/>
-      <circle cx="41" cy="44" r="1" fill="#fff"/>
-      <circle cx="61" cy="44" r="1" fill="#fff"/>
-      <!-- Hocico y boca natural -->
-      <path d="M45 55 Q50 50 55 55 L 50 62 Z" fill="#78350f"/>
-      <path d="M50 62 Q45 68 40 62 M50 62 Q55 68 60 62" stroke="#451a03" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M48 52 L48 56 M52 52 L52 56" stroke="#451a03" stroke-width="1"/>
+      <ellipse cx="60" cy="110" rx="35" ry="8" fill="rgba(0,0,0,.5)"/>
+      <path d="M60 5 C 75 10, 85 5, 100 20 C 110 35, 115 45, 110 60 C 115 75, 110 90, 95 105 C 80 115, 75 110, 60 115 C 45 110, 40 115, 25 105 C 10 90, 5 75, 10 60 C 5 45, 10 35, 20 20 C 35 5, 45 10, 60 5 Z" fill="url(#mane)" stroke="#451a03" stroke-width="2"/>
+      <path d="M35 35 Q25 20 40 25 Q45 30 40 40 Z" fill="#ca8a04" stroke="#451a03" stroke-width="2"/>
+      <path d="M85 35 Q95 20 80 25 Q75 30 80 40 Z" fill="#ca8a04" stroke="#451a03" stroke-width="2"/>
+      <path d="M60 25 C 85 25, 90 45, 90 60 C 90 85, 75 95, 60 95 C 45 95, 30 85, 30 60 C 30 45, 35 25, 60 25 Z" fill="url(#face)" stroke="#451a03" stroke-width="2"/>
+      <circle cx="45" cy="55" r="5" fill="#1e293b"/>
+      <circle cx="75" cy="55" r="5" fill="#1e293b"/>
+      <circle cx="46" cy="54" r="2" fill="#fff"/>
+      <circle cx="76" cy="54" r="2" fill="#fff"/>
+      <path d="M35 45 L50 50 M85 45 L70 50" stroke="#451a03" stroke-width="4" stroke-linecap="round"/>
+      <path d="M50 70 Q60 60 70 70 L 60 80 Z" fill="#451a03"/>
+      <path d="M60 80 Q50 90 40 80 M60 80 Q70 90 80 80" stroke="#451a03" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M55 65 L55 72 M65 65 L65 72" stroke="#451a03" stroke-width="2"/>
     </svg>
     <h3 class="juego-titulo">El León de Judá</h3>
     <p class="juego-descripcion">Aprende con valentía las historias del Rey de reyes.</p>
@@ -321,57 +310,54 @@ footer .credito { font-size: clamp(.55rem,1.1vw,.7rem); opacity: .85; font-style
     <span class="btn-jugar">▶️ Jugar</span>
   </a>
 
-  <!-- 4. Pescadores de Hombres -->
+  <!-- 4. Pescadores (Barca 3D) -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Pescadores.github.io/" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Jugar Pescadores de Hombres">
-    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Barca de pescadores">
+    <svg class="juego-icono-3d" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Barca de pescadores">
       <defs>
-        <linearGradient id="wood" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#78350f"/></linearGradient>
+        <linearGradient id="wood" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#d97706"/><stop offset="50%" stop-color="#92400e"/><stop offset="100%" stop-color="#451a03"/></linearGradient>
         <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
         <linearGradient id="sail" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#cbd5e1"/></linearGradient>
       </defs>
-      <ellipse cx="50" cy="88" rx="30" ry="6" fill="rgba(0,0,0,.45)"/>
-      <!-- Olas del agua suaves -->
-      <path d="M10 82 C 20 76, 30 88, 40 82 C 50 76, 60 88, 70 82 C 80 76, 90 88, 95 82 L 95 90 L 10 90 Z" fill="url(#water)"/>
-      <!-- Casco de la barca con curvas naturales -->
-      <path d="M15 65 C 25 70, 75 70, 85 65 C 80 80, 60 85, 50 85 C 40 85, 20 80, 15 65 Z" fill="url(#wood)" stroke="#451a03" stroke-width="1.5"/>
-      <!-- Mástil inclinado por el viento -->
-      <path d="M50 65 Q48 45 45 25" stroke="#451a03" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <!-- Vela hinchada por el viento -->
-      <path d="M45 25 C 65 30, 75 45, 65 60 C 55 62, 48 55, 48 45 Z" fill="url(#sail)" stroke="#94a3b8" stroke-width="1.5"/>
-      <!-- Detalle de red -->
-      <path d="M20 68 Q35 60 45 65" stroke="#f8fafc" stroke-width="1" fill="none" stroke-dasharray="2,2"/>
+      <ellipse cx="60" cy="110" rx="35" ry="8" fill="rgba(0,0,0,.5)"/>
+      <path d="M10 95 C 25 85, 40 105, 60 95 C 80 85, 95 105, 110 95 L 110 115 L 10 115 Z" fill="url(#water)" stroke="#0c4a6e" stroke-width="2"/>
+      <path d="M15 75 C 30 85, 90 85, 105 75 C 95 100, 80 105, 60 105 C 40 105, 25 100, 15 75 Z" fill="url(#wood)" stroke="#451a03" stroke-width="2"/>
+      <path d="M25 85 Q60 95 95 85" stroke="#78350f" stroke-width="2" fill="none"/>
+      <path d="M35 95 Q60 100 85 95" stroke="#78350f" stroke-width="2" fill="none"/>
+      <path d="M60 75 Q58 45 55 20" stroke="#451a03" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M55 20 C 85 25, 95 50, 80 75 C 65 75, 55 65, 55 50 Z" fill="url(#sail)" stroke="#94a3b8" stroke-width="2"/>
+      <path d="M25 80 Q45 70 60 80" stroke="#f8fafc" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
     </svg>
-    <h3 class="juego-titulo">Pescadores de Hombres</h3>
+    <h3 class="juego-titulo">Pescadores</h3>
     <p class="juego-descripcion">Acompaña a Pedro y Andrés en su llamado junto al mar.</p>
     <span class="juego-versiculo">📖 Mateo 4:18-20</span>
     <span class="btn-jugar">▶️ Jugar</span>
   </a>
 
-  <!-- 5. Shock 99.5 FM -->
+  <!-- 5. Shock 99.5 FM (Radio 3D) -->
   <a href="https://tunein.com/radio/Shock-Fm-995-s346433/?lang=es" target="_blank" rel="noopener noreferrer" class="juego-card" aria-label="Escuchar Shock 99.5 FM en vivo">
-    <svg class="juego-icono-3d" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radio">
+    <svg class="juego-icono-3d" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radio">
       <defs>
-        <linearGradient id="radio-body" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0e7490"/></linearGradient>
-        <radialGradient id="speaker" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#64748b"/></radialGradient>
+        <linearGradient id="radio-body" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#0891b2"/><stop offset="100%" stop-color="#083344"/></linearGradient>
+        <radialGradient id="speaker" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ffffff"/><stop offset="70%" stop-color="#64748b"/><stop offset="100%" stop-color="#1e293b"/></radialGradient>
       </defs>
-      <ellipse cx="50" cy="90" rx="26" ry="5" fill="rgba(0,0,0,.45)"/>
-      <!-- Cuerpo de la radio con bordes suaves -->
-      <rect x="15" y="40" width="65" height="40" rx="10" fill="url(#radio-body)" stroke="#083344" stroke-width="1.5"/>
-      <!-- Altavoz circular texturizado -->
-      <circle cx="36" cy="60" r="13" fill="url(#speaker)" stroke="#083344" stroke-width="1.5"/>
-      <circle cx="36" cy="60" r="5" fill="#334155"/>
-      <circle cx="36" cy="60" r="2" fill="#0f172a"/>
-      <!-- Panel de botones curvo -->
-      <rect x="56" y="48" width="16" height="5" rx="2.5" fill="#083344"/>
-      <rect x="56" y="57" width="16" height="5" rx="2.5" fill="#083344"/>
-      <circle cx="60" cy="70" r="2.5" fill="#facc15"/>
-      <circle cx="68" cy="70" r="2.5" fill="#f97316"/>
-      <!-- Antena inclinada -->
-      <path d="M25 40 Q20 25 15 12" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <circle cx="15" cy="12" r="3" fill="#facc15" stroke="#083344" stroke-width="1"/>
-      <!-- Ondas orgánicas de radio -->
-      <path d="M80 40 Q88 30 88 15" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M86 45 Q96 30 96 10" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="60" cy="110" rx="35" ry="8" fill="rgba(0,0,0,.5)"/>
+      <!-- Antena -->
+      <path d="M30 50 Q25 30 15 15" stroke="#94a3b8" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="15" cy="15" r="5" fill="#facc15" stroke="#083344" stroke-width="2"/>
+      <!-- Ondas de radio -->
+      <path d="M95 45 Q105 30 105 15" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M105 55 Q118 35 118 10" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Cuerpo -->
+      <rect x="15" y="50" width="85" height="50" rx="10" fill="url(#radio-body)" stroke="#083344" stroke-width="3"/>
+      <!-- Altavoz -->
+      <circle cx="45" cy="75" r="18" fill="url(#speaker)" stroke="#083344" stroke-width="3"/>
+      <circle cx="45" cy="75" r="8" fill="#1e293b"/>
+      <circle cx="45" cy="75" r="3" fill="#000"/>
+      <!-- Panel -->
+      <rect x="70" y="60" width="20" height="8" rx="3" fill="#083344"/>
+      <rect x="70" y="72" width="20" height="8" rx="3" fill="#083344"/>
+      <circle cx="75" cy="90" r="4" fill="#facc15"/>
+      <circle cx="85" cy="90" r="4" fill="#f97316"/>
     </svg>
     <h3 class="juego-titulo">Shock 99.5 FM</h3>
     <p class="juego-descripcion">Escucha en vivo música, historias bíblicas y alabanzas.</p>
@@ -396,21 +382,21 @@ function efectoClick(x, y) {
   destello.style.setProperty('--x', x + 'px');
   destello.style.setProperty('--y', y + 'px');
   document.body.appendChild(destello);
-  setTimeout(() => destello.remove(), 700);
+  setTimeout(() => destello.remove(), 600);
 
-  const total = 14;
+  const total = 16;
   for (let i = 0; i < total; i++) {
     const chispa = document.createElement('div');
     chispa.className = 'chispa';
     chispa.style.left = x + 'px';
     chispa.style.top = y + 'px';
     const angulo = (Math.PI * 2 * i) / total + Math.random() * 0.5;
-    const distancia = 50 + Math.random() * 110;
+    const distancia = 60 + Math.random() * 120;
     chispa.style.setProperty('--tx', Math.cos(angulo) * distancia + 'px');
     chispa.style.setProperty('--ty', Math.sin(angulo) * distancia + 'px');
-    chispa.style.animationDelay = (Math.random() * 0.08) + 's';
+    chispa.style.animationDelay = (Math.random() * 0.1) + 's';
     document.body.appendChild(chispa);
-    setTimeout(() => chispa.remove(), 1000);
+    setTimeout(() => chispa.remove(), 900);
   }
   if (navigator.vibrate) navigator.vibrate(40);
 }
