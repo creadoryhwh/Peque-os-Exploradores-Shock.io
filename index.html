@@ -21,8 +21,8 @@
 
 html, body { 
   height: 100%; 
-  height: 100dvh; /* Soporte nativo iOS/Android */
-  overflow: hidden; /* Evita scroll global */
+  height: 100dvh; 
+  overflow: hidden; 
 }
 
 body {
@@ -34,11 +34,11 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ================= FONDO CON LA IMAGEN DE LOS EXPLORADORES ================= */
+/* ================= FONDO CON LA IMAGEN ================= */
 .fondo-imagen {
   position: fixed; inset: 0; z-index: -6; pointer-events: none;
-  /* REEMPLAZA 'fondo-exploradores.jpg' POR EL NOMBRE DE TU ARCHIVO */
-  background-image: url('fondo-exploradores.jpg');
+  /* AQUÍ SE CARGA EL FONDO */
+  background-image: url('fondo.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -47,7 +47,7 @@ body {
 .fondo-imagen::before {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(5,5,16,0.4) 0%, rgba(5,5,16,0.85) 100%);
-  backdrop-filter: blur(2px); /* Un toque de desenfoque para dar profundidad */
+  backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
 }
 
@@ -124,7 +124,7 @@ main.juegos-grid {
 main.juegos-grid::-webkit-scrollbar { display: none; }
 main.juegos-grid { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ================= TARJETA TIPOGRÁFICA (SIN SILUETAS) ================= */
+/* ================= TARJETA TIPOGRÁFICA ================= */
 .juego-card {
   background: linear-gradient(145deg, rgba(255,255,255,.15), rgba(255,255,255,.05));
   border: 2px solid rgba(250,204,21,.6); border-radius: clamp(12px, 2vw, 20px);
@@ -149,7 +149,6 @@ main.juegos-grid { -ms-overflow-style: none; scrollbar-width: none; }
   box-shadow: 0 15px 30px rgba(0,0,0,.9), 0 0 30px rgba(250,204,21,.7), inset 0 0 20px rgba(250,204,21,.2);
 }
 
-/* Título principal de la tarjeta (Nombre del juego) */
 .juego-titulo {
   font-size: clamp(.85rem, 2.2vh, 1.2rem); 
   font-weight: 900; 
@@ -161,7 +160,6 @@ main.juegos-grid { -ms-overflow-style: none; scrollbar-width: none; }
   letter-spacing: 1px;
 }
 
-/* Texto bíblico */
 .juego-versiculo {
   display: inline-block; 
   font-size: clamp(.6rem, 1.2vh, .8rem); 
@@ -175,7 +173,6 @@ main.juegos-grid { -ms-overflow-style: none; scrollbar-width: none; }
   white-space: nowrap;
 }
 
-/* Botón de Jugar */
 .btn-jugar {
   display: inline-block; 
   background: linear-gradient(180deg,#facc15,#f97316); 
